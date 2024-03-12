@@ -23,10 +23,13 @@
     "@geekcornernpm/jimp-plugins": "1.4.6",
     "jszip": "3.7.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.11.26"
+  },
   "engines": {
     "node": ">=14.0.0"
   },
   "publishConfig": { "registry": "https://registry.npmjs.org" },
-  "main": "src/index.mjs"
+  "main": "src/index.mjs",
+  "types": "types/index.d.mts"
 }

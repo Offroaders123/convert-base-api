@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "rootDir": "./src",
+    "outDir": "./types",
+    "module": "NodeNext",
+    "target": "ESNext",
+    "isolatedModules": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "strict": true,
+    // "noImplicitOverride": true,
+    // "noPropertyAccessFromIndexSignature": true,
+    // "noUncheckedIndexedAccess": true,
+    "allowUnreachableCode": false,
+    "noUnusedLocals": true,
+    // "noUnusedParameters": true
+  }
+}

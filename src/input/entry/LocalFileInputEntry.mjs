@@ -1,6 +1,7 @@
 import {BufferInputEntry} from "./BufferInputEntry.mjs";
 import {parse} from "path";
 import {readFile} from "fs/promises";
+import JSZip from "jszip";
 
 /**
  * Class LocalFileInputEntry
@@ -23,7 +24,9 @@ class LocalFileInputEntry extends BufferInputEntry {
     }
 
     /**
-     * @inheritDoc
+     * @param {string} folder
+     *
+     * @returns {Promise<void>}
      */
     async applyToFolder(folder) {
         await this.read();
@@ -32,7 +35,9 @@ class LocalFileInputEntry extends BufferInputEntry {
     }
 
     /**
-     * @inheritDoc
+     * @param {JSZip} zip
+     *
+     * @returns {Promise<void>}
      */
     async applyToZip(zip) {
         await this.read();
@@ -41,7 +46,7 @@ class LocalFileInputEntry extends BufferInputEntry {
     }
 
     /**
-     * @inheritDoc
+     * @returns {Promise<string>}
      */
     async getName() {
         return parse(this.path).name; // Name without file extension

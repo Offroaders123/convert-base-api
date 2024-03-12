@@ -5,14 +5,14 @@ import {AbstractLog} from "./AbstractLog.mjs";
  */
 class ConsoleLog extends AbstractLog {
     /**
-     * @inheritDoc
+     * @param {string} log
      */
     log(log) {
         console.log(log);
     }
 
     /**
-     * @inheritDoc
+     * @param {string} log
      */
     warn(log) {
         this.warnCount();

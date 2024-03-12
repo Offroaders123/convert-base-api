@@ -23,7 +23,9 @@ class LocalFileOutput extends BufferOutput {
     }
 
     /**
-     * @inheritDoc
+     * @returns {Promise<string>}
+     *
+     * @throws {Error}
      */
     async generate() {
         const data = await super.generate();

@@ -5,7 +5,9 @@ import {BufferOutput} from "./BufferOutput.mjs";
  */
 class Uint8ArrayOutput extends BufferOutput {
     /**
-     * @inheritDoc
+     * @returns {Promise<Uint8Array>}
+     *
+     * @throws {Error}
      */
     async generate() {
         this.log.log(`Generate ${Uint8Array.name} zip`);

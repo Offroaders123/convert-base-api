@@ -32,7 +32,7 @@ class AbstractOutput {
          */
         this.log;
         /**
-         * @type {Object}
+         * @type {Options}
          *
          * @protected
          */
@@ -44,7 +44,7 @@ class AbstractOutput {
      * @param {AbstractLog} log
      * @param {Options} options
      *
-     * @returns Promise<void>
+     * @returns {Promise<void>}
      */
     async _init(input, log, options) {
         this.input = input;

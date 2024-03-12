@@ -1,7 +1,10 @@
 import {AbstractOutput} from "./AbstractOutput.mjs";
+import {AbstractInput} from "../input/AbstractInput.mjs";
+import {AbstractLog} from "../log/AbstractLog.mjs";
 import {copyFile, mkdir, readdir, readFile, rename, rmdir, stat, writeFile} from "fs/promises";
 import {dirname, join} from "path";
 import {existsSync} from "fs";
+import { AbstractInputEntry } from "../input/entry/AbstractInputEntry.mjs";
 
 /**
  * Class LocalFolderOutput
@@ -24,7 +27,10 @@ class LocalFolderOutput extends AbstractOutput {
     }
 
     /**
-     * @inheritDoc
+     * @param {AbstractInput} input
+     * @param {AbstractLog} log
+     *
+     * @returns {Promise<void>}
      */
     async _init(input, log) {
         await super._init(input, log);
@@ -37,14 +43,20 @@ class LocalFolderOutput extends AbstractOutput {
     }
 
     /**
-     * @inheritDoc
+     * @param {AbstractInputEntry} entry
+     *
+     * @returns {Promise<void>}
+     *
+     * @throws {Error}
      */
     async applyInputEntry(entry) {
         await entry.applyToFolder(this.path);
     }
 
     /**
-     * @inheritDoc
+     * @returns {Promise<string>}
+     *
+     * @throws {Error}
      */
     async generate() {
         this.log.log(`Output: ${this.path}`);
@@ -53,14 +65,23 @@ class LocalFolderOutput extends AbstractOutput {
     }
 
     /**
-     * @inheritDoc
+     * @param {string} path
+     *
+     * @returns {Promise<boolean>}
+     *
+     * @throws {Error}
      */
     async exists(path) {
         return existsSync(this.p(path));
     }
 
     /**
-     * @inheritDoc
+     * @param {string} from
+     * @param {string} to
+     *
+     * @returns {Promise<void>}
+     *
+     * @throws {Error}
      */
     async rename(from, to) {
         if (await this.exists(to)) {
@@ -72,14 +93,23 @@ class LocalFolderOutput extends AbstractOutput {
     }
 
     /**
-     * @inheritDoc
+     * @param {string} file
+     *
+     * @returns {Promise<Buffer>}
+     *
+     * @throws {Error}
      */
     async read(file) {
         return readFile(this.p(file));
     }
 
     /**
-     * @inheritDoc
+     * @param {string} file
+     * @param {Buffer} data
+     *
+     * @returns {Promise<void>}
+     *
+     * @throws {Error}
      */
     async write(file, data) {
         await mkdir(dirname(this.p(file)), {recursive: true});
@@ -87,14 +117,23 @@ class LocalFolderOutput extends AbstractOutput {
     }
 
     /**
-     * @inheritDoc
+     * @param {string} path
+     *
+     * @returns {Promise<void>}
+     *
+     * @throws {Error}
      */
     async delete(path) {
         await rmdir(this.p(path), {recursive: true});
     }
 
     /**
-     * @inheritDoc
+     * @param {string} from
+     * @param {string} to
+     *
+     * @returns {Promise<void>}
+     *
+     * @throws {Error}
      */
     async copy(from, to) {
         if ((await stat(this.p(from))).isDirectory()) {
@@ -126,7 +165,11 @@ class LocalFolderOutput extends AbstractOutput {
     }
 
     /**
-     * @inheritDoc
+     * @param {string} name
+     *
+     * @returns {Promise<string|null>}
+     *
+     * @throws {Error}
      */
     async lookupFile(name) {
         return this.lookupFileScanFiles(name, ".");
@@ -158,7 +201,7 @@ class LocalFolderOutput extends AbstractOutput {
     }
 
     /**
-     * @param {string} p
+     * @param {string[]} p
      *
      * @returns {string}
      *

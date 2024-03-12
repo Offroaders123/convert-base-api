@@ -24,7 +24,9 @@ class LocalFolderInputEntry extends AbstractInputEntry {
     }
 
     /**
-     * @inheritDoc
+     * @param {string} folder
+     *
+     * @returns {Promise<void>}
      */
     async applyToFolder(folder) {
         this.log.log(`Copy ${this.path}`);
@@ -53,7 +55,9 @@ class LocalFolderInputEntry extends AbstractInputEntry {
     }
 
     /**
-     * @inheritDoc
+     * @param {JSZip} zip
+     *
+     * @returns {Promise<void>}
      */
     async applyToZip(zip) {
         this.log.log(`Pack ${this.path}`);
@@ -84,7 +88,7 @@ class LocalFolderInputEntry extends AbstractInputEntry {
     }
 
     /**
-     * @inheritDoc
+     * @returns {Promise<string>}
      */
     async getName() {
         return parse(this.path).name; // Name without file extension

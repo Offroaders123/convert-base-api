@@ -5,7 +5,9 @@ import {BlobOutput} from "./BlobOutput.mjs";
  */
 class FileOutput extends BlobOutput {
     /**
-     * @inheritDoc
+     * @returns {Promise<File>}
+     *
+     * @throws {Error}
      */
     async generate() {
         const data = await super.generate();

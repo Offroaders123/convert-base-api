@@ -1,4 +1,4 @@
-import {AbstractConverter} from "@modifiedcommand/convert-base-api";
+import {AbstractConverter} from "./index.mjs";
 import {AbstractInput} from "./input/AbstractInput.mjs";
 import {AbstractLog} from "./log/AbstractLog.mjs";
 import {AbstractOutput} from "./output/AbstractOutput.mjs";
@@ -16,7 +16,7 @@ class AbstractBaseApi {
      * @param {AbstractInput} input
      * @param {AbstractOutput} output
      * @param {AbstractLog} log
-     * @param {Options} options
+     * @param {Partial<Options>} options
      */
     constructor(input, output, log, options = {}) {
         /**
@@ -85,7 +85,7 @@ class AbstractBaseApi {
     }
 
     /**
-     * @returns {Promise<Function<AbstractConverter>[]>}
+     * @returns {Promise<(typeof AbstractConverter)[]>}
      *
      * @protected
      *
@@ -137,7 +137,7 @@ class AbstractBaseApi {
         }
 
         /**
-         * @param {Function<AbstractConverter>[]} additional_converter_classes
+         * @param {(typeof AbstractConverter)[]} additional_converter_classes
          *
          * @returns {Promise<void>}
          */
@@ -146,7 +146,7 @@ class AbstractBaseApi {
                 converters.push(...converter_class.getDefaultConverters());
 
                 return converters;
-            }, []));
+            }, /** @type {AbstractConverter[]} */ ([])));
         }
     }
 

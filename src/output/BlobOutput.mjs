@@ -5,7 +5,9 @@ import {BufferOutput} from "./BufferOutput.mjs";
  */
 class BlobOutput extends BufferOutput {
     /**
-     * @inheritDoc
+     * @returns {Promise<Blob>}
+     *
+     * @throws {Error}
      */
     async generate() {
         this.log.log(`Generate ${Blob.name} zip`);

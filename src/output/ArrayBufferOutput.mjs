@@ -5,7 +5,9 @@ import {BufferOutput} from "./BufferOutput.mjs";
  */
 class ArrayBufferOutput extends BufferOutput {
     /**
-     * @inheritDoc
+     * @returns {Promise<ArrayBuffer>}
+     *
+     * @throws {Error}
      */
     async generate() {
         this.log.log(`Generate ${ArrayBuffer.name} zip`);

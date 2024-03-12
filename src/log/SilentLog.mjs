@@ -5,14 +5,14 @@ import {AbstractLog} from "./AbstractLog.mjs";
  */
 class SilentLog extends AbstractLog {
     /**
-     * @inheritDoc
+     * @param {string} log
      */
     log(log) {
 
     }
 
     /**
-     * @inheritDoc
+     * @param {string} log
      */
     warn(log) {
 

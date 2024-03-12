@@ -24,7 +24,9 @@ class BufferInputEntry extends AbstractInputEntry {
     }
 
     /**
-     * @inheritDoc
+     * @param {string} folder
+     *
+     * @returns {Promise<void>}
      */
     async applyToFolder(folder) {
         this.log.log(`Extract zip`);
@@ -46,7 +48,9 @@ class BufferInputEntry extends AbstractInputEntry {
     }
 
     /**
-     * @inheritDoc
+     * @param {JSZip} zip
+     *
+     * @returns {Promise<void>}
      */
     async applyToZip(zip) {
         this.log.log(`Read zip`);
@@ -67,7 +71,7 @@ class BufferInputEntry extends AbstractInputEntry {
     }
 
     /**
-     * @inheritDoc
+     * @returns {Promise<string>}
      */
     async getName() {
         return ""; // No name available from buffer

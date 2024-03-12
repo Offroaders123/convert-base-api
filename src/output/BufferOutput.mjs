@@ -1,6 +1,21 @@
 import { AbstractOutput } from "./AbstractOutput.mjs";
+import { AbstractInputEntry } from "../input/entry/AbstractInputEntry.mjs";
 import { basename, dirname } from "path";
 import JSZip from "jszip";
+
+/**
+ * @typedef OutputByType
+ * 
+ * @property {string} base64
+ * @property {string} string
+ * @property {string} text
+ * @property {string} binarystring
+ * @property {number[]} array
+ * @property {Uint8Array} uint8array
+ * @property {ArrayBuffer} arraybuffer
+ * @property {Blob} blob
+ * @property {Buffer} nodebuffer
+ */
 
 /**
  * Class BufferOutput
@@ -21,14 +36,20 @@ class BufferOutput extends AbstractOutput {
     }
 
     /**
-     * @inheritDoc
+     * @param {AbstractInputEntry} entry
+     *
+     * @returns {Promise<void>}
+     *
+     * @throws {Error}
      */
     async applyInputEntry(entry) {
         await entry.applyToZip(this.zip);
     }
 
     /**
-     * @inheritDoc
+     * @returns {Promise<*>}
+     *
+     * @throws {Error}
      */
     async generate() {
         this.log.log(`Generate ${Buffer.name} zip`);
@@ -37,9 +58,11 @@ class BufferOutput extends AbstractOutput {
     }
 
     /**
-     * @param {string} type
+     * @template {keyof OutputByType} T
      *
-     * @returns {Promise<Buffer>}
+     * @param {T} type
+     * 
+     * @returns {Promise<OutputByType[T]>}
      *
      * @protected
      */
@@ -48,14 +71,23 @@ class BufferOutput extends AbstractOutput {
     }
 
     /**
-     * @inheritDoc
+     * @param {string} path
+     *
+     * @returns {Promise<boolean>}
+     *
+     * @throws {Error}
      */
     async exists(path) {
         return (path in this.zip.files);
     }
 
     /**
-     * @inheritDoc
+     * @param {string} from
+     * @param {string} to
+     *
+     * @returns {Promise<void>}
+     *
+     * @throws {Error}
      */
     async rename(from, to) {
         //this.zip.rename(from, to);
@@ -72,28 +104,46 @@ class BufferOutput extends AbstractOutput {
     }
 
     /**
-     * @inheritDoc
+     * @param {string} file
+     *
+     * @returns {Promise<Buffer>}
+     *
+     * @throws {Error}
      */
     async read(file) {
         return this.zip.file(file).async("nodebuffer");
     }
 
     /**
-     * @inheritDoc
+     * @param {string} file
+     * @param {Buffer} data
+     *
+     * @returns {Promise<void>}
+     *
+     * @throws {Error}
      */
     async write(file, data) {
         this.zip.file(file, data);
     }
 
     /**
-     * @inheritDoc
+     * @param {string} path
+     *
+     * @returns {Promise<void>}
+     *
+     * @throws {Error}
      */
     async delete(path) {
         this.zip.remove(path);
     }
 
     /**
-     * @inheritDoc
+     * @param {string} from
+     * @param {string} to
+     *
+     * @returns {Promise<void>}
+     *
+     * @throws {Error}
      */
     async copy(from, to) {
         // https://github.com/Stuk/jszip/pull/622
@@ -111,7 +161,11 @@ class BufferOutput extends AbstractOutput {
     }
 
     /**
-     * @inheritDoc
+     * @param {string} name
+     *
+     * @returns {Promise<string|null>}
+     *
+     * @throws {Error}
      */
     async lookupFile(name) {
         const entry = Object.values(this.zip.files).find(entry => {

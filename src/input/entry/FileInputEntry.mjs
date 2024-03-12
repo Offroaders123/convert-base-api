@@ -1,13 +1,16 @@
 import {BufferInputEntry} from "./BufferInputEntry.mjs";
 import {dirname, join, parse, sep} from "path";
 import {mkdir, writeFile} from "fs/promises";
+import JSZip from "jszip";
 
 /**
  * Class FileInputEntry
  */
 class FileInputEntry extends BufferInputEntry {
     /**
-     * @inheritDoc
+     * @param {string} folder
+     *
+     * @returns {Promise<void>}
      */
     async applyToFolder(folder) {
         if (this.buffer.webkitRelativePath) {
@@ -27,7 +30,9 @@ class FileInputEntry extends BufferInputEntry {
     }
 
     /**
-     * @inheritDoc
+     * @param {JSZip} zip
+     *
+     * @returns {Promise<void>}
      */
     async applyToZip(zip) {
         if (this.buffer.webkitRelativePath) {
@@ -46,7 +51,7 @@ class FileInputEntry extends BufferInputEntry {
     }
 
     /**
-     * @inheritDoc
+     * @returns {Promise<string>}
      */
     async getName() {
         if (this.buffer.webkitRelativePath) {

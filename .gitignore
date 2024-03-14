@@ -1,3 +1,7 @@
+types
+*.lock
+*-lock.json
+
 # Logs
 logs
 *.log
